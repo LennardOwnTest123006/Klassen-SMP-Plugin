@@ -1,0 +1,466 @@
+name: KlassenSMP
+version: '${project.version}'
+main: de.klassensmp.KlassenSMP
+api-version: '1.21'
+description: Vollstaendiges Klassen-SMP System fuer Spigot/Bukkit mit Java- und Bedrock-Unterstuetzung.
+author: KlassenSMP
+website: https://klassensmp.de
+load: POSTWORLD
+folia-supported: false
+
+# Optionale Plugins. Fehlen sie, laeuft KlassenSMP ganz normal weiter -
+# lediglich die jeweilige Zusatzfunktion ist dann deaktiviert.
+softdepend:
+  - Vault
+  - PlaceholderAPI
+  - floodgate
+  - Geyser-Spigot
+
+# JDBC-Treiber werden vom Server selbst aus Maven Central geladen
+# (Spigot-Funktion "libraries", ab 1.16.5). Dadurch enthaelt die JAR keine
+# fremden Bibliotheken und bleibt klein.
+libraries:
+  - org.xerial:sqlite-jdbc:3.51.3.0
+  - com.mysql:mysql-connector-j:8.4.0
+
+commands:
+  smp:
+    description: Informationen und Hilfe zum Klassen-SMP.
+    usage: /smp [info|hilfe]
+    aliases: [klassensmp]
+  spawn:
+    description: Teleportiert dich zum Serverspawn.
+    usage: /spawn
+  setspawn:
+    description: Setzt den Serverspawn auf deine Position.
+    usage: /setspawn
+    permission: klassensmp.setspawn
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  home:
+    description: Teleportiert dich zu einem deiner Homes.
+    usage: /home [name]
+    aliases: [h]
+  sethome:
+    description: Setzt ein Home an deiner Position.
+    usage: /sethome [name]
+  delhome:
+    description: Loescht ein Home.
+    usage: /delhome <name>
+  homes:
+    description: Zeigt alle deine Homes.
+    usage: /homes
+  tpa:
+    description: Fragt einen Spieler, ob du zu ihm teleportieren darfst.
+    usage: /tpa <Spieler>
+  tpahere:
+    description: Bittet einen Spieler, zu dir zu kommen.
+    usage: /tpahere <Spieler>
+  tpaccept:
+    description: Nimmt eine Teleportanfrage an.
+    usage: /tpaccept [Spieler]
+    aliases: [tpja, tpyes]
+  tpdeny:
+    description: Lehnt eine Teleportanfrage ab.
+    usage: /tpdeny [Spieler]
+    aliases: [tpnein, tpno]
+  warp:
+    description: Teleportiert dich zu einem Warp.
+    usage: /warp [name]
+  setwarp:
+    description: Erstellt einen Warp.
+    usage: /setwarp <name> [permission] [material]
+    permission: klassensmp.setwarp
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  delwarp:
+    description: Loescht einen Warp.
+    usage: /delwarp <name>
+    permission: klassensmp.delwarp
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  money:
+    description: Zeigt dein Guthaben.
+    usage: /money [Spieler]
+    aliases: [geld]
+  balance:
+    description: Zeigt dein Guthaben.
+    usage: /balance [Spieler]
+    aliases: [bal, kontostand]
+  pay:
+    description: Ueberweist Geld an einen Spieler.
+    usage: /pay <Spieler> <Betrag>
+    aliases: [zahlen]
+  baltop:
+    description: Zeigt die reichsten Spieler.
+    usage: /baltop
+    aliases: [geldtop]
+  bank:
+    description: Verwaltet dein Bankkonto.
+    usage: /bank [einzahlen|abheben] <Betrag>
+  eco:
+    description: Verwaltet Guthaben (Team).
+    usage: /eco <give|take|set> <Spieler> <Betrag>
+    permission: klassensmp.economy.admin
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  stats:
+    description: Zeigt Spielerstatistiken.
+    usage: /stats [Spieler]
+    aliases: [statistik]
+  playtime:
+    description: Zeigt die Spielzeit.
+    usage: /playtime [Spieler]
+    aliases: [spielzeit]
+  achievements:
+    description: Zeigt deine Erfolge.
+    usage: /achievements [Spieler]
+    aliases: [erfolge]
+  quests:
+    description: Zeigt deine taeglichen und woechentlichen Aufgaben.
+    usage: /quests
+    aliases: [aufgaben]
+  kit:
+    description: Oeffnet die Kit-Uebersicht oder gibt ein Kit.
+    usage: /kit [name|liste|erstellen|loeschen]
+    aliases: [kits]
+  crate:
+    description: Crates oeffnen und ansehen.
+    usage: /crate [oeffnen|vorschau|liste|key]
+    aliases: [crates, kiste]
+  grave:
+    description: Zeigt deine Graeber.
+    usage: /grave [tp <id>|alle]
+    aliases: [grab, graeber]
+  pvp:
+    description: Schaltet dein PvP ein oder aus.
+    usage: /pvp
+  claim:
+    description: Verwaltet deine Grundstuecke.
+    usage: /claim <erstellen|loeschen|info|liste|vertrauen|entfernen>
+    aliases: [grundstueck]
+  event:
+    description: Server-Events verwalten und beitreten.
+    usage: /event [beitreten|verlassen|liste|starten|stoppen]
+    aliases: [events]
+  mod:
+    description: Schaltet den Moderationsmodus um.
+    usage: /mod
+    permission: klassensmp.mod
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  msg:
+    description: Sendet eine private Nachricht.
+    usage: /msg <Spieler> <Nachricht>
+    aliases: [w, tell, m, fluester]
+  reply:
+    description: Antwortet auf die letzte private Nachricht.
+    usage: /reply <Nachricht>
+    aliases: [r, antwort]
+  ignore:
+    description: Ignoriert einen Spieler oder hebt das Ignorieren auf.
+    usage: /ignore [Spieler]
+    aliases: [ignorieren]
+  chat:
+    description: Zeigt Informationen zum Chat.
+    usage: /chat
+  mutechat:
+    description: Schaltet den globalen Chat stumm.
+    usage: /mutechat
+    permission: klassensmp.chat.mute
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  socialspy:
+    description: Zeigt private Nachrichten anderer Spieler.
+    usage: /socialspy
+    permission: klassensmp.socialspy
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  staffchat:
+    description: Sendet eine Nachricht an das Team.
+    usage: /staffchat <Nachricht>
+    aliases: [sc]
+    permission: klassensmp.staffchat
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  performance:
+    description: Oeffnet die Performance-Uebersicht.
+    usage: /performance
+    aliases: [perf]
+    permission: klassensmp.performance
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  tps:
+    description: Zeigt die aktuellen TPS.
+    usage: /tps
+  lag:
+    description: Zeigt ausfuehrliche Leistungsdaten.
+    usage: /lag
+  serverboost:
+    description: Steuert den Server-Booster.
+    usage: /serverboost <normal|performance|extreme|aufraeumen>
+    aliases: [boost]
+    permission: klassensmp.serverboost
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  kick:
+    description: Wirft einen Spieler vom Server.
+    usage: /kick <Spieler> [Grund]
+    permission: klassensmp.kick
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  ban:
+    description: Sperrt einen Spieler dauerhaft.
+    usage: /ban <Spieler> [Grund]
+    permission: klassensmp.ban
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  tempban:
+    description: Sperrt einen Spieler zeitlich begrenzt.
+    usage: /tempban <Spieler> <Dauer> [Grund]
+    permission: klassensmp.ban.temp
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  unban:
+    description: Hebt eine Sperre auf.
+    usage: /unban <Spieler>
+    permission: klassensmp.unban
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  mute:
+    description: Schaltet einen Spieler stumm.
+    usage: /mute <Spieler> [Grund]
+    permission: klassensmp.mute
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  tempmute:
+    description: Schaltet einen Spieler zeitlich begrenzt stumm.
+    usage: /tempmute <Spieler> <Dauer> [Grund]
+    permission: klassensmp.mute
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  unmute:
+    description: Hebt eine Stummschaltung auf.
+    usage: /unmute <Spieler>
+    permission: klassensmp.mute
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  warn:
+    description: Verwarnt einen Spieler.
+    usage: /warn <Spieler> [Grund]
+    aliases: [verwarnen]
+    permission: klassensmp.warn
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  warnings:
+    description: Zeigt die Strafhistorie eines Spielers.
+    usage: /warnings [Spieler]
+    aliases: [verwarnungen]
+    permission: klassensmp.warn
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  freeze:
+    description: Haelt einen Spieler fest.
+    usage: /freeze <Spieler>
+    permission: klassensmp.freeze
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  vanish:
+    description: Macht dich unsichtbar.
+    usage: /vanish [Spieler]
+    aliases: [v]
+    permission: klassensmp.vanish
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  invsee:
+    description: Zeigt das Inventar eines Spielers.
+    usage: /invsee <Spieler>
+    permission: klassensmp.invsee
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  endersee:
+    description: Zeigt die Enderchest eines Spielers.
+    usage: /endersee <Spieler>
+    permission: klassensmp.endersee
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  teleport:
+    description: Teleportiert Spieler.
+    usage: /teleport <Spieler> [Ziel]
+    permission: klassensmp.teleport
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  smpadmin:
+    description: Oeffnet das Adminmenue.
+    usage: /smpadmin [reload]
+    aliases: [ksadmin]
+    permission: klassensmp.admin
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+  backup:
+    description: Erstellt ein Backup.
+    usage: /backup [liste]
+    permission: klassensmp.backup
+    permission-message: "&cDu hast keine Berechtigung fuer diesen Befehl."
+
+permissions:
+  klassensmp.*:
+    description: Alle Rechte des Plugins (Owner).
+    default: op
+    children:
+      klassensmp.admin: true
+      klassensmp.mod: true
+      klassensmp.use: true
+
+  klassensmp.admin:
+    description: Vollzugriff auf Verwaltung und Konfiguration.
+    default: op
+    children:
+      klassensmp.mod: true
+      klassensmp.backup: true
+      klassensmp.serverboost: true
+      klassensmp.serverboost.extreme: true
+      klassensmp.setspawn: true
+      klassensmp.setwarp: true
+      klassensmp.delwarp: true
+      klassensmp.economy.admin: true
+      klassensmp.economy.others: true
+      klassensmp.kit.admin: true
+      klassensmp.crate.admin: true
+      klassensmp.event.manage: true
+      klassensmp.claims.admin: true
+      klassensmp.claims.bypass: true
+      klassensmp.claims.unlimited: true
+      klassensmp.protection.bypass: true
+      klassensmp.home.unlimited: true
+      klassensmp.teleport.bypassdelay: true
+      klassensmp.graves.others: true
+      klassensmp.moderation.overrideexempt: true
+      klassensmp.performance.cleanup: true
+
+  klassensmp.mod:
+    description: Moderationsrechte.
+    default: op
+    children:
+      klassensmp.use: true
+      klassensmp.kick: true
+      klassensmp.ban: true
+      klassensmp.ban.temp: true
+      klassensmp.unban: true
+      klassensmp.mute: true
+      klassensmp.warn: true
+      klassensmp.freeze: true
+      klassensmp.vanish: true
+      klassensmp.vanish.see: true
+      klassensmp.vanish.others: true
+      klassensmp.invsee: true
+      klassensmp.endersee: true
+      klassensmp.teleport: true
+      klassensmp.socialspy: true
+      klassensmp.staffchat: true
+      klassensmp.performance: true
+      klassensmp.performance.alerts: true
+      klassensmp.stats.others: true
+      klassensmp.moderation.exempt: true
+      klassensmp.antispam.bypass: true
+      klassensmp.chat.bypassmute: true
+      klassensmp.chat.color: true
+      klassensmp.graves.teleport: true
+
+  klassensmp.use:
+    description: Grundlegende Spielerbefehle.
+    default: true
+    children:
+      klassensmp.spawn: true
+      klassensmp.home: true
+      klassensmp.tpa: true
+      klassensmp.warp: true
+      klassensmp.economy: true
+      klassensmp.economy.pay: true
+      klassensmp.economy.bank: true
+      klassensmp.stats: true
+      klassensmp.playtime: true
+      klassensmp.kit: true
+      klassensmp.crate: true
+      klassensmp.pvp: true
+      klassensmp.claims: true
+      klassensmp.quests: true
+      klassensmp.achievements: true
+      klassensmp.graves: true
+      klassensmp.event: true
+      klassensmp.tps: true
+      klassensmp.chat: true
+      klassensmp.chat.msg: true
+      klassensmp.chat.ignore: true
+
+  # Ränge - dienen ausschliesslich der Darstellung und der Zuordnung in der Config.
+  klassensmp.rank.spieler:
+    description: Rang Spieler.
+    default: true
+  klassensmp.rank.schueler:
+    description: Rang Schueler.
+    default: false
+  klassensmp.rank.vip:
+    description: Rang VIP.
+    default: false
+    children:
+      klassensmp.kit.vip: true
+  klassensmp.rank.moderator:
+    description: Rang Moderator.
+    default: false
+    children:
+      klassensmp.mod: true
+  klassensmp.rank.admin:
+    description: Rang Admin.
+    default: op
+    children:
+      klassensmp.admin: true
+  klassensmp.rank.owner:
+    description: Rang Owner.
+    default: false
+    children:
+      klassensmp.*: true
+
+  klassensmp.spawn: {description: Erlaubt /spawn., default: true}
+  klassensmp.setspawn: {description: Erlaubt /setspawn., default: op}
+  klassensmp.home: {description: Erlaubt Home-Befehle., default: true}
+  klassensmp.home.unlimited: {description: Unbegrenzt viele Homes., default: op}
+  klassensmp.tpa: {description: Erlaubt Teleportanfragen., default: true}
+  klassensmp.tpa.nocooldown: {description: Kein TPA-Cooldown., default: op}
+  klassensmp.warp: {description: Erlaubt /warp., default: true}
+  klassensmp.setwarp: {description: Erlaubt /setwarp., default: op}
+  klassensmp.delwarp: {description: Erlaubt /delwarp., default: op}
+  klassensmp.economy: {description: Zeigt das eigene Guthaben., default: true}
+  klassensmp.economy.pay: {description: Erlaubt /pay., default: true}
+  klassensmp.economy.bank: {description: Erlaubt /bank., default: true}
+  klassensmp.economy.others: {description: Zeigt fremdes Guthaben., default: op}
+  klassensmp.economy.admin: {description: Verwaltet Guthaben., default: op}
+  klassensmp.stats: {description: Erlaubt /stats., default: true}
+  klassensmp.stats.others: {description: Zeigt fremde Statistiken., default: op}
+  klassensmp.playtime: {description: Erlaubt /playtime., default: true}
+  klassensmp.achievements: {description: Erlaubt /achievements., default: true}
+  klassensmp.quests: {description: Erlaubt /quests., default: true}
+  klassensmp.kit: {description: Erlaubt /kit., default: true}
+  klassensmp.kit.admin: {description: Kits verwalten., default: op}
+  klassensmp.kit.nocooldown: {description: Kein Kit-Cooldown., default: op}
+  klassensmp.crate: {description: Erlaubt /crate., default: true}
+  klassensmp.crate.admin: {description: Crate-Schluessel vergeben., default: op}
+  klassensmp.graves: {description: Erlaubt /grave., default: true}
+  klassensmp.graves.others: {description: Fremde Graeber oeffnen., default: op}
+  klassensmp.graves.teleport: {description: Zu Graebern teleportieren., default: op}
+  klassensmp.pvp: {description: Erlaubt /pvp., default: true}
+  klassensmp.claims: {description: Erlaubt Claim-Befehle., default: true}
+  klassensmp.claims.admin: {description: Fremde Claims verwalten., default: op}
+  klassensmp.claims.bypass: {description: Ignoriert Claim-Schutz., default: op}
+  klassensmp.claims.unlimited: {description: Keine Claim-Grenzen., default: op}
+  klassensmp.protection.bypass: {description: Ignoriert Spawn- und Weltschutz., default: op}
+  klassensmp.event: {description: Erlaubt /event., default: true}
+  klassensmp.event.manage: {description: Events starten und stoppen., default: op}
+  klassensmp.chat: {description: Erlaubt /chat., default: true}
+  klassensmp.chat.msg: {description: Erlaubt private Nachrichten., default: true}
+  klassensmp.chat.ignore: {description: Erlaubt /ignore., default: true}
+  klassensmp.chat.color: {description: Farbcodes im Chat., default: op}
+  klassensmp.chat.mute: {description: Erlaubt /mutechat., default: op}
+  klassensmp.chat.bypassmute: {description: Schreibt trotz Chat-Mute., default: op}
+  klassensmp.chat.bypassignore: {description: Umgeht Ignorierlisten., default: op}
+  klassensmp.socialspy: {description: Erlaubt /socialspy., default: op}
+  klassensmp.staffchat: {description: Erlaubt den Teamchat., default: op}
+  klassensmp.antispam.bypass: {description: Umgeht den Spamschutz., default: op}
+  klassensmp.tps: {description: Erlaubt /tps., default: true}
+  klassensmp.performance: {description: Erlaubt /performance und /lag., default: op}
+  klassensmp.performance.alerts: {description: Erhaelt Lag-Warnungen., default: op}
+  klassensmp.performance.cleanup: {description: Erlaubt manuelles Aufraeumen., default: op}
+  klassensmp.serverboost: {description: Erlaubt /serverboost., default: op}
+  klassensmp.serverboost.extreme: {description: Erlaubt den EXTREME-Modus., default: op}
+  klassensmp.backup: {description: Erlaubt /backup., default: op}
+  klassensmp.kick: {description: Erlaubt /kick., default: op}
+  klassensmp.ban: {description: Erlaubt /ban., default: op}
+  klassensmp.ban.temp: {description: Erlaubt /tempban., default: op}
+  klassensmp.unban: {description: Erlaubt /unban., default: op}
+  klassensmp.mute: {description: Erlaubt Mute-Befehle., default: op}
+  klassensmp.warn: {description: Erlaubt /warn und /warnings., default: op}
+  klassensmp.freeze: {description: Erlaubt /freeze., default: op}
+  klassensmp.vanish: {description: Erlaubt /vanish., default: op}
+  klassensmp.vanish.see: {description: Sieht versteckte Spieler., default: op}
+  klassensmp.vanish.others: {description: Versteckt andere Spieler., default: op}
+  klassensmp.invsee: {description: Erlaubt /invsee., default: op}
+  klassensmp.endersee: {description: Erlaubt /endersee., default: op}
+  klassensmp.teleport: {description: Erlaubt /teleport., default: op}
+  klassensmp.teleport.bypassdelay: {description: Teleportiert ohne Verzoegerung., default: op}
+  klassensmp.moderation.exempt: {description: Kann nicht bestraft werden., default: op}
+  klassensmp.moderation.overrideexempt: {description: Umgeht den Schutz des Teams., default: false}

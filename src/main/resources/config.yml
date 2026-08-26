@@ -1,0 +1,489 @@
+# ============================================================================
+#  KlassenSMP - Hauptkonfiguration
+#  Alle Texte liegen in der messages.yml, alle Inhalte in kits.yml,
+#  crates.yml, quests.yml, achievements.yml und events.yml.
+#
+#  Farbcodes: &a &b &c ... sowie Hex-Farben im Format &#RRGGBB
+#  Nach Aenderungen: /smpadmin reload  (bzw. /smp reload)
+# ============================================================================
+
+# Anzeigename des Servers (Platzhalter %server%)
+server-name: "&aKlassen SMP"
+# Wird im Scoreboard/Tablist als %website% verwendet
+website: "klassensmp.de"
+
+# ---------------------------------------------------------------------------
+# Datenbank
+# ---------------------------------------------------------------------------
+database:
+  # SQLITE (Standard, keine Einrichtung noetig) oder MYSQL / MARIADB
+  type: SQLITE
+  sqlite:
+    file: "database.db"
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "klassensmp"
+    user: "klassensmp"
+    password: ""
+    use-ssl: false
+  # Wie viele Spielerprofile beim Start in den Speicher geladen werden.
+  cache-limit: 10000
+  # Abstand zwischen automatischen Speichervorgaengen (Sekunden)
+  autosave-seconds: 300
+  log-autosave: false
+
+# ---------------------------------------------------------------------------
+# Ränge
+# Die Rechte kommen ausschliesslich aus dem Permission-System.
+# Der Rang mit dem hoechsten "weight", dessen Permission der Spieler besitzt,
+# gewinnt. "homes: -1" bedeutet unbegrenzt.
+# ---------------------------------------------------------------------------
+ranks:
+  default: spieler
+  list:
+    spieler:
+      display: "&7Spieler"
+      prefix: "&7[Spieler] "
+      suffix: ""
+      permission: "klassensmp.rank.spieler"
+      name-color: "&7"
+      weight: 0
+      homes: 1
+    schueler:
+      display: "&aSchueler"
+      prefix: "&a[Schueler] "
+      suffix: ""
+      permission: "klassensmp.rank.schueler"
+      name-color: "&a"
+      weight: 10
+      homes: 2
+    vip:
+      display: "&6VIP"
+      prefix: "&6[VIP] "
+      suffix: " &e★"
+      permission: "klassensmp.rank.vip"
+      name-color: "&6"
+      weight: 30
+      homes: 5
+    moderator:
+      display: "&9Moderator"
+      prefix: "&9[Mod] "
+      suffix: ""
+      permission: "klassensmp.rank.moderator"
+      name-color: "&9"
+      weight: 60
+      homes: 10
+    admin:
+      display: "&cAdmin"
+      prefix: "&c[Admin] "
+      suffix: ""
+      permission: "klassensmp.rank.admin"
+      name-color: "&c"
+      weight: 80
+      homes: -1
+    owner:
+      display: "&4Owner"
+      prefix: "&4[Owner] "
+      suffix: " &4✦"
+      permission: "klassensmp.rank.owner"
+      name-color: "&4"
+      weight: 100
+      homes: -1
+
+# ---------------------------------------------------------------------------
+# Tablist
+# Wird nicht jeden Tick aktualisiert - "update-ticks" steuert das Intervall.
+# ---------------------------------------------------------------------------
+tablist:
+  enabled: true
+  update-ticks: 40
+  # Anzeige hinter Prefix und Rang
+  name-format: "%namecolor%%player%"
+  java-tag: "&f☕ "
+  bedrock-tag: "&b❖ "
+  java-icon: "&f☕ Java"
+  bedrock-icon: "&b❖ Bedrock"
+  header:
+    - "&8&m                                        "
+    - "&a&l🟩 KLASSEN SMP"
+    - ""
+    - "&7Online: &f%online% &7/ &f%max%"
+    - "&7☕ Java: &f%java%   &7❖ Bedrock: &f%bedrock%"
+    - "&8&m                                        "
+  footer:
+    - "&8&m                                        "
+    - "&7TPS: &f%tps% %statusicon%   &7Ping: &f%ping% ms"
+    - "&7Dein Rang: %rank%"
+    - "&e%website%"
+    - "&8&m                                        "
+
+# ---------------------------------------------------------------------------
+# Scoreboard (Seitenleiste)
+# Verfuegbare Platzhalter: %player% %rank% %prefix% %money% %bank% %online%
+# %max% %java% %bedrock% %ping% %tps% %status% %statusicon% %playtime%
+# %kills% %deaths% %mobkills% %world% %homes% %claims% %achievements%
+# %achievements_total% %time% %date% %server% %website% %pvp%
+# Maximal 15 Zeilen.
+# ---------------------------------------------------------------------------
+scoreboard:
+  enabled: true
+  update-ticks: 40
+  title: "&a&lKLASSEN SMP"
+  lines:
+    - "&8&m                       "
+    - "&7Spieler: &f%player%"
+    - "&7Rang: %rank%"
+    - ""
+    - "&7Geld: &a%money%"
+    - "&7Online: &f%online%&7/&f%max%"
+    - ""
+    - "&7TPS: &f%tps% %statusicon%"
+    - "&7Ping: &f%ping% ms"
+    - ""
+    - "&7Spielzeit:"
+    - "&f%playtime%"
+    - "&8&m                       "
+    - "&e%website%"
+
+# ---------------------------------------------------------------------------
+# Chat
+# ---------------------------------------------------------------------------
+chat:
+  format: "%prefix%%namecolor%%player%%suffix%&7: &f%message%"
+  staffchat-format: "&8[&cTeam&8] &7%name%&8: &f%message%"
+  socialspy-format: "&8[&cSpy&8] &7%sender% &8-> &7%target%&8: &f%message%"
+  private:
+    format-out: "&8[&7Du &8-> &b%target%&8] &f%message%"
+    format-in: "&8[&b%sender% &8-> &7Dir&8] &f%message%"
+  # Befehle, die bei einer Stummschaltung ebenfalls blockiert werden
+  muted-commands:
+    - "/msg"
+    - "/w "
+    - "/tell"
+    - "/m "
+    - "/reply"
+    - "/r "
+    - "/fluester"
+
+# ---------------------------------------------------------------------------
+# Beitritt / Verlassen
+# ---------------------------------------------------------------------------
+join:
+  custom-messages: true
+
+# ---------------------------------------------------------------------------
+# Tod
+# ---------------------------------------------------------------------------
+death:
+  custom-messages: true
+
+# ---------------------------------------------------------------------------
+# Economy
+# ---------------------------------------------------------------------------
+economy:
+  symbol: "$"
+  symbol-before-amount: true
+  name-singular: "Muenze"
+  name-plural: "Muenzen"
+  start-balance: 250.0
+  max-balance: 10000000.0
+  minimum-payment: 1.0
+  baltop-gui: true
+  # KlassenSMP als Vault-Anbieter registrieren (falls Vault installiert ist)
+  register-in-vault: true
+
+# ---------------------------------------------------------------------------
+# Homes
+# Die maximale Anzahl kommt aus dem jeweiligen Rang (siehe "ranks").
+# ---------------------------------------------------------------------------
+homes:
+  default-name: "home"
+
+# ---------------------------------------------------------------------------
+# Teleportation (betrifft /spawn, /home, /warp, /tpa)
+# ---------------------------------------------------------------------------
+teleport:
+  delay-seconds: 3
+  cancel-on-move: true
+  cancel-on-damage: true
+  safe-teleport: true
+  safe-search-radius: 4
+  safe-search-height: 6
+
+# ---------------------------------------------------------------------------
+# Teleportanfragen
+# ---------------------------------------------------------------------------
+tpa:
+  timeout-seconds: 60
+  cooldown-seconds: 15
+
+# ---------------------------------------------------------------------------
+# Spawn
+# ---------------------------------------------------------------------------
+spawn:
+  teleport-on-join: false
+  teleport-on-first-join: true
+  respawn-at-spawn: false
+
+# ---------------------------------------------------------------------------
+# PvP
+# ---------------------------------------------------------------------------
+pvp:
+  enabled: true
+  # true = PvP ist ueberall erzwungen, /pvp hat keine Wirkung
+  force-enabled: false
+  protect-spawn: true
+  protect-claims: true
+  combat-tag:
+    enabled: true
+    seconds: 15
+    # Erlaubt /spawn, /home und /warp waehrend des Kampfes
+    allow-teleport: false
+    broadcast-logout: true
+    # KILL = der Spieler stirbt beim Verlassen, NONE = keine Folge
+    on-logout: KILL
+
+# ---------------------------------------------------------------------------
+# Claims (Grundstuecksschutz)
+# Ist auf dem Server bereits ein Claim-Plugin im Einsatz, kann dieses System
+# hier komplett deaktiviert werden.
+# ---------------------------------------------------------------------------
+claims:
+  enabled: true
+  default-radius: 15
+  min-size: 5
+  max-size: 100
+  max-per-player: 3
+  max-blocks-per-player: 40000
+  protect-entities: true
+  block-explosions: true
+  block-piston-grief: true
+
+# ---------------------------------------------------------------------------
+# Schutz von Spawn und wichtigen Welten (Anti-Grief)
+# ---------------------------------------------------------------------------
+protection:
+  spawn:
+    enabled: true
+    radius: 32
+    block-explosions: true
+  # In diesen Welten darf nur mit klassensmp.protection.bypass gebaut werden
+  protected-worlds: []
+
+# ---------------------------------------------------------------------------
+# Welten
+# ---------------------------------------------------------------------------
+worlds:
+  # KlassenSMP bleibt in diesen Welten passiv
+  disabled: []
+  no-homes:
+    - "world_the_end"
+  no-claims:
+    - "world_the_end"
+  no-pvp: []
+
+# ---------------------------------------------------------------------------
+# Graeber
+# ---------------------------------------------------------------------------
+graves:
+  enabled: true
+  place-block: true
+  block: CHEST
+  lifetime-minutes: 60
+  cleanup-interval-minutes: 5
+  # true = Items fallen beim Ablauf auf den Boden, false = sie verfallen
+  drop-on-expire: false
+
+# ---------------------------------------------------------------------------
+# Statistiken
+# ---------------------------------------------------------------------------
+stats:
+  gui: true
+
+# ---------------------------------------------------------------------------
+# Erfolge
+# ---------------------------------------------------------------------------
+achievements:
+  broadcast: true
+  title: true
+
+# ---------------------------------------------------------------------------
+# Aufgaben
+# ---------------------------------------------------------------------------
+quests:
+  autosave-seconds: 180
+
+# ---------------------------------------------------------------------------
+# Crates
+# ---------------------------------------------------------------------------
+crates:
+  key-material: TRIPWIRE_HOOK
+  animation-steps: 24
+
+# ---------------------------------------------------------------------------
+# Oberflaechen
+# ---------------------------------------------------------------------------
+gui:
+  filler-material: GRAY_STAINED_GLASS_PANE
+
+# ---------------------------------------------------------------------------
+# Moderation
+# ---------------------------------------------------------------------------
+moderation:
+  broadcast: true
+  file-log: true
+  gui-mute-minutes: 30
+  # Befehle, die eingefrorene Spieler weiterhin nutzen duerfen
+  freeze-allowed-commands:
+    - "/msg"
+    - "/r"
+    - "/reply"
+    - "/staffchat"
+  # Automatische Folgemassnahmen nach X Verwarnungen.
+  # Format: "MUTE <Dauer>", "KICK" oder "BAN <Dauer>"
+  warn-actions:
+    "3": "MUTE 30m"
+    "5": "KICK"
+    "7": "BAN 1d"
+
+# ---------------------------------------------------------------------------
+# Anti-Spam
+# ---------------------------------------------------------------------------
+antispam:
+  enabled: true
+  chat-cooldown-millis: 2000
+  command-cooldown-millis: 500
+  window-seconds: 10
+  max-messages: 5
+  max-commands: 12
+  block-duplicates: true
+  caps:
+    min-length: 8
+    max-percent: 70
+  # 0 = niemals automatisch stummschalten
+  violations-until-mute: 5
+  mute-seconds: 300
+
+# ---------------------------------------------------------------------------
+# Anti-Bot / Join-Schutz
+# Es wird niemals automatisch gebannt und es werden keine IP-Adressen
+# gespeichert oder protokolliert.
+# ---------------------------------------------------------------------------
+antibot:
+  enabled: true
+  window-seconds: 8
+  max-joins: 8
+  max-attempts-per-address: 4
+  lockdown-seconds: 30
+
+# ---------------------------------------------------------------------------
+# Performance
+# Ein Bukkit-Plugin kann die FPS des Clients nicht beeinflussen. Hier wird
+# ausschliesslich die Serverleistung optimiert.
+# ---------------------------------------------------------------------------
+performance:
+  check-interval-seconds: 15
+  warn-cooldown-seconds: 120
+  # Automatische Massnahmen bei kritischer Last
+  auto-actions: true
+  thresholds:
+    good-tps: 18.5
+    medium-tps: 15.0
+  cleanup:
+    enabled: true
+    interval-minutes: 10
+    announce: true
+    # Nur Objekte, die laenger als diese Zeit auf dem Boden liegen
+    item-lifetime-seconds: 300
+    remove-xp-orbs: true
+    on-critical: true
+    # Diese Items werden niemals entfernt
+    protected-items:
+      - DIAMOND
+      - NETHERITE_INGOT
+      - NETHERITE_SCRAP
+      - ANCIENT_DEBRIS
+      - ELYTRA
+      - NETHER_STAR
+      - TOTEM_OF_UNDYING
+      - ENCHANTED_GOLDEN_APPLE
+      - SHULKER_BOX
+      - DRAGON_EGG
+  limits:
+    enabled: true
+    mobs-per-chunk: 40
+    on-critical: true
+
+# ---------------------------------------------------------------------------
+# Server-Booster
+# EXTREME ist niemals der Standard und muss bewusst aktiviert werden.
+# Ein Wert von -1 bedeutet "keine Begrenzung".
+# ---------------------------------------------------------------------------
+serverboost:
+  default-mode: NORMAL
+  modes:
+    normal:
+      particles: true
+      particle-factor: 1.0
+      mobs-per-chunk: -1
+      hopper-transfers-per-second: -1
+      redstone-per-second: -1
+      items-per-chunk: -1
+    performance:
+      particles: true
+      particle-factor: 0.5
+      mobs-per-chunk: 40
+      hopper-transfers-per-second: 200
+      redstone-per-second: 300
+      items-per-chunk: 150
+    extreme:
+      particles: false
+      particle-factor: 0.2
+      mobs-per-chunk: 20
+      hopper-transfers-per-second: 60
+      redstone-per-second: 80
+      items-per-chunk: 60
+
+# ---------------------------------------------------------------------------
+# Backups
+# ---------------------------------------------------------------------------
+backup:
+  enabled: true
+  # Leer lassen fuer plugins/KlassenSMP/backups
+  folder: ""
+  keep: 5
+  compression-level: 5
+  include-plugin-data: true
+  # Leer lassen = alle geladenen Welten
+  worlds: []
+  exclude:
+    - "session.lock"
+    - "uid.dat"
+    - "backups"
+  auto:
+    enabled: false
+    interval-hours: 12
+
+# ---------------------------------------------------------------------------
+# Sounds
+# Es werden Minecraft-Soundnamen verwendet (Kleinschreibung mit Punkten).
+# ---------------------------------------------------------------------------
+sounds:
+  enabled: true
+  teleport: "entity.enderman.teleport"
+  achievement: "ui.toast.challenge_complete"
+  quest-complete: "entity.player.levelup"
+  crate-tick: "block.note_block.hat"
+  crate-win: "entity.player.levelup"
+  event-win: "ui.toast.challenge_complete"
+  staffmode: "block.beacon.activate"
+  staffmode-off: "block.beacon.deactivate"
+
+# ---------------------------------------------------------------------------
+# Partikel
+# Unbekannte Partikelnamen werden still uebersprungen.
+# ---------------------------------------------------------------------------
+particles:
+  enabled: true
+  teleport: "PORTAL"

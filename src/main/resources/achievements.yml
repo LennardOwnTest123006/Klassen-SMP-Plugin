@@ -1,0 +1,129 @@
+# ============================================================================
+#  KlassenSMP - Erfolge
+#
+#  trigger: FIRST_JOIN, BLOCKS_BROKEN, BLOCKS_PLACED, PLAYTIME_MINUTES,
+#           PLAYER_KILLS, MOB_KILLS, MONEY_EARNED, MINE_DIAMOND,
+#           ENTER_NETHER, ENTER_END, KILL_DRAGON, HOMES_SET
+#  amount : benoetigter Zaehlerstand (bei einmaligen Ausloesern immer 1)
+# ============================================================================
+
+achievements:
+  erster-join:
+    display: "&aWillkommen im Klassen-SMP"
+    description: "&7Betritt den Server zum ersten Mal."
+    icon: OAK_DOOR
+    trigger: FIRST_JOIN
+    amount: 1
+    reward-money: 100.0
+    reward-experience: 10
+    reward-commands: []
+
+  erste-diamanten:
+    display: "&bErste Diamanten"
+    description: "&7Baue dein erstes Diamanterz ab."
+    icon: DIAMOND
+    trigger: MINE_DIAMOND
+    amount: 1
+    reward-money: 250.0
+    reward-experience: 50
+    reward-commands: []
+
+  nether-reise:
+    display: "&cErste Nether-Reise"
+    description: "&7Betritt den Nether."
+    icon: NETHERRACK
+    trigger: ENTER_NETHER
+    amount: 1
+    reward-money: 300.0
+    reward-experience: 50
+    reward-commands: []
+
+  end-betreten:
+    display: "&5Das Ende"
+    description: "&7Betritt das End."
+    icon: END_STONE
+    trigger: ENTER_END
+    amount: 1
+    reward-money: 500.0
+    reward-experience: 100
+    reward-commands: []
+
+  drachentoeter:
+    display: "&5Drachentoeter"
+    description: "&7Besiege den Enderdrachen."
+    icon: DRAGON_HEAD
+    trigger: KILL_DRAGON
+    amount: 1
+    reward-money: 5000.0
+    reward-experience: 1000
+    reward-commands: []
+
+  bergarbeiter:
+    display: "&6Bergarbeiter"
+    description: "&7Baue 1000 Bloecke ab."
+    icon: IRON_PICKAXE
+    trigger: BLOCKS_BROKEN
+    amount: 1000
+    reward-money: 400.0
+    reward-experience: 100
+    reward-commands: []
+
+  grossbaumeister:
+    display: "&eGrossbaumeister"
+    description: "&7Platziere 5000 Bloecke."
+    icon: BRICKS
+    trigger: BLOCKS_PLACED
+    amount: 5000
+    reward-money: 800.0
+    reward-experience: 200
+    reward-commands: []
+
+  stammgast:
+    display: "&dStammgast"
+    description: "&7Spiele insgesamt 10 Stunden."
+    icon: CLOCK
+    trigger: PLAYTIME_MINUTES
+    amount: 600
+    reward-money: 1000.0
+    reward-experience: 250
+    reward-commands: []
+
+  erster-kill:
+    display: "&cErster Sieg"
+    description: "&7Besiege deinen ersten Mitspieler."
+    icon: IRON_SWORD
+    trigger: PLAYER_KILLS
+    amount: 1
+    reward-money: 200.0
+    reward-experience: 50
+    reward-commands: []
+
+  monsterjaeger:
+    display: "&4Monsterjaeger"
+    description: "&7Besiege 500 Mobs."
+    icon: ZOMBIE_HEAD
+    trigger: MOB_KILLS
+    amount: 500
+    reward-money: 1200.0
+    reward-experience: 300
+    reward-commands: []
+
+  millionaer:
+    display: "&6Wohlhabend"
+    description: "&7Verdiene insgesamt 100.000 Muenzen."
+    icon: GOLD_BLOCK
+    trigger: MONEY_EARNED
+    amount: 100000
+    reward-money: 10000.0
+    reward-experience: 500
+    reward-commands: []
+
+  zuhause:
+    display: "&aZuhause"
+    description: "&7Setze dein erstes Home."
+    icon: RED_BED
+    trigger: HOMES_SET
+    amount: 1
+    reward-money: 50.0
+    reward-experience: 10
+    reward-commands: []

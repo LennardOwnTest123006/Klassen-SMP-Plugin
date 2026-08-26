@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.klassensmp</groupId>
+    <artifactId>KlassenSMP</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>KlassenSMP</name>
+    <description>Vollstaendiges Klassen-SMP Plugin fuer Spigot/Bukkit (Java + Bedrock).</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>21</java.version>
+        <!-- Kann auf jede verfuegbare Spigot-Version gesetzt werden, z.B. 1.21.8-R0.1-SNAPSHOT -->
+        <spigot.version>1.21.11-R0.1-SNAPSHOT</spigot.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!--
+             Einzige Compile-Abhaengigkeit: die Spigot-API.
+             Vault, PlaceholderAPI, Geyser und Floodgate werden bewusst NICHT als
+             Compile-Abhaengigkeit eingebunden, sondern zur Laufzeit ueber Reflection
+             angebunden (siehe de.klassensmp.hook). Dadurch ist das Plugin ohne diese
+             Plugins lauffaehig und benoetigt keine zusaetzlichen Repositories.
+             JDBC-Treiber (SQLite / MySQL) werden ueber "libraries:" in der plugin.yml
+             vom Server selbst aus Maven Central geladen.
+        -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${spigot.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+        <defaultGoal>clean package</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                    <compilerArgs>
+                        <arg>-Xlint:all,-processing</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

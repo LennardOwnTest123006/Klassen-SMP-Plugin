@@ -1,0 +1,111 @@
+# ============================================================================
+#  KlassenSMP - Crates
+#
+#  Schluessel werden mit /crate key <crate> <Spieler> [anzahl] vergeben.
+#  Alternativ kann ueber "key-permission" eine Permission hinterlegt werden,
+#  die den Schluessel ersetzt.
+#
+#  chance : relatives Gewicht. Die Prozentangabe in der Vorschau ergibt sich
+#           aus dem Anteil an der Summe aller Gewichte einer Crate.
+#  item   : Kurzschreibweise MATERIAL:ANZAHL
+#  Es gibt bewusst keinerlei Echtgeld-Anbindung.
+# ============================================================================
+
+crates:
+  vote:
+    display: "&aVote-Crate"
+    icon: CHEST
+    key-permission: ""
+    rewards:
+      geld-klein:
+        display: "&a250 Muenzen"
+        money: 250.0
+        chance: 40
+      eisen:
+        display: "&f16x Eisen"
+        item: "IRON_INGOT:16"
+        chance: 30
+      erfahrung:
+        display: "&b100 Erfahrung"
+        experience: 100
+        chance: 20
+      diamanten:
+        display: "&b4x Diamant"
+        item: "DIAMOND:4"
+        chance: 10
+        broadcast: true
+
+  rare:
+    display: "&9Rare-Crate"
+    icon: ENDER_CHEST
+    key-permission: ""
+    rewards:
+      geld:
+        display: "&a1000 Muenzen"
+        money: 1000.0
+        chance: 35
+      diamanten:
+        display: "&b12x Diamant"
+        item: "DIAMOND:12"
+        chance: 30
+      goldapfel:
+        display: "&64x Goldener Apfel"
+        item: "GOLDEN_APPLE:4"
+        chance: 25
+      obsidian:
+        display: "&516x Obsidian"
+        item: "OBSIDIAN:16"
+        chance: 10
+        broadcast: true
+
+  epic:
+    display: "&5Epic-Crate"
+    icon: SHULKER_BOX
+    key-permission: ""
+    rewards:
+      geld-gross:
+        display: "&a5000 Muenzen"
+        money: 5000.0
+        chance: 30
+      netherite:
+        display: "&8Netherit-Barren"
+        item: "NETHERITE_INGOT:1"
+        chance: 15
+        broadcast: true
+      elytra:
+        display: "&dElytra"
+        item: "ELYTRA:1"
+        chance: 5
+        broadcast: true
+      enchant:
+        display: "&b8x Verzauberungsbuch"
+        item: "ENCHANTED_BOOK:8"
+        chance: 25
+      erfahrung:
+        display: "&b1000 Erfahrung"
+        experience: 1000
+        chance: 25
+
+  event:
+    display: "&6Event-Crate"
+    icon: BEACON
+    key-permission: ""
+    rewards:
+      geld:
+        display: "&a2500 Muenzen"
+        money: 2500.0
+        chance: 40
+      kit:
+        display: "&eWerkzeug-Kit Freischaltung"
+        commands:
+          - "lp user %player% permission settemp klassensmp.kit.vip true 7d"
+        chance: 10
+      shulker:
+        display: "&5Shulkerkiste"
+        item: "SHULKER_BOX:1"
+        chance: 25
+      totem:
+        display: "&eTotem der Unsterblichkeit"
+        item: "TOTEM_OF_UNDYING:1"
+        chance: 25
+        broadcast: true

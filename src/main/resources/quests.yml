@@ -1,0 +1,139 @@
+# ============================================================================
+#  KlassenSMP - Taegliche und woechentliche Aufgaben
+#
+#  Jeder Spieler bekommt pro Zeitraum zufaellig "daily-count" bzw.
+#  "weekly-count" Aufgaben aus dem jeweiligen Pool. Die Auswahl ist an die
+#  UUID des Spielers und den Zeitraum gebunden und bleibt deshalb ueber
+#  Serverneustarts hinweg gleich - sie wechselt automatisch mit dem Tag
+#  bzw. der Kalenderwoche.
+#
+#  type   : BREAK_BLOCKS, PLACE_BLOCKS, KILL_MOBS, KILL_PLAYERS, PLAY_MINUTES,
+#           EARN_MONEY, FISH_ITEMS, CRAFT_ITEMS, MINE_ORE, WALK_BLOCKS
+#  target : optionaler Filter (Material- oder Mob-Name), leer = beliebig
+#  period : DAILY oder WEEKLY
+# ============================================================================
+
+settings:
+  daily-count: 3
+  weekly-count: 2
+
+quests:
+  bloecke-abbauen:
+    display: "&aBergarbeiter"
+    description: "&7Baue 100 Bloecke ab."
+    icon: IRON_PICKAXE
+    period: DAILY
+    type: BREAK_BLOCKS
+    target: ""
+    amount: 100
+    reward-money: 150.0
+    reward-experience: 50
+    reward-commands: []
+
+  tiere-jagen:
+    display: "&6Jaeger"
+    description: "&7Besiege 20 Mobs."
+    icon: IRON_SWORD
+    period: DAILY
+    type: KILL_MOBS
+    target: ""
+    amount: 20
+    reward-money: 200.0
+    reward-experience: 60
+    reward-commands: []
+
+  diamanten-finden:
+    display: "&bSchatzsucher"
+    description: "&7Finde 10 Diamanterze."
+    icon: DIAMOND
+    period: DAILY
+    type: MINE_ORE
+    target: "DIAMOND_ORE"
+    amount: 10
+    reward-money: 500.0
+    reward-experience: 100
+    reward-commands: []
+
+  spielzeit:
+    display: "&dDabei sein"
+    description: "&7Spiele 30 Minuten."
+    icon: CLOCK
+    period: DAILY
+    type: PLAY_MINUTES
+    target: ""
+    amount: 30
+    reward-money: 100.0
+    reward-experience: 30
+    reward-commands: []
+
+  bauen:
+    display: "&eBaumeister"
+    description: "&7Platziere 200 Bloecke."
+    icon: BRICKS
+    period: DAILY
+    type: PLACE_BLOCKS
+    target: ""
+    amount: 200
+    reward-money: 180.0
+    reward-experience: 40
+    reward-commands: []
+
+  angeln:
+    display: "&3Angler"
+    description: "&7Fange 15 Fische."
+    icon: FISHING_ROD
+    period: DAILY
+    type: FISH_ITEMS
+    target: ""
+    amount: 15
+    reward-money: 220.0
+    reward-experience: 50
+    reward-commands: []
+
+  wochen-bergbau:
+    display: "&6Wochen-Bergbau"
+    description: "&7Baue 2000 Bloecke ab."
+    icon: NETHERITE_PICKAXE
+    period: WEEKLY
+    type: BREAK_BLOCKS
+    target: ""
+    amount: 2000
+    reward-money: 2500.0
+    reward-experience: 500
+    reward-commands: []
+
+  wochen-jagd:
+    display: "&cWochen-Jagd"
+    description: "&7Besiege 250 Mobs."
+    icon: DIAMOND_SWORD
+    period: WEEKLY
+    type: KILL_MOBS
+    target: ""
+    amount: 250
+    reward-money: 3000.0
+    reward-experience: 600
+    reward-commands: []
+
+  wochen-spielzeit:
+    display: "&dWochen-Marathon"
+    description: "&7Spiele 300 Minuten."
+    icon: CLOCK
+    period: WEEKLY
+    type: PLAY_MINUTES
+    target: ""
+    amount: 300
+    reward-money: 2000.0
+    reward-experience: 400
+    reward-commands: []
+
+  wochen-handwerk:
+    display: "&eWochen-Werkstatt"
+    description: "&7Stelle 100 Gegenstaende her."
+    icon: CRAFTING_TABLE
+    period: WEEKLY
+    type: CRAFT_ITEMS
+    target: ""
+    amount: 100
+    reward-money: 1500.0
+    reward-experience: 300
+    reward-commands: []

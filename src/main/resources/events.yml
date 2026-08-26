@@ -1,0 +1,134 @@
+# ============================================================================
+#  KlassenSMP - Server-Events
+#
+#  type: SPLEEF, PVP, DROP, MOB_ARENA, PARKOUR, TREASURE, BUILD
+#  warp: Name eines Warps (siehe /setwarp). Fehlt der Warp, wird der Spawn
+#        verwendet.
+#
+#  Ablauf: /event starten <name>  ->  Anmeldephase (/event beitreten)
+#          ->  automatischer Start  ->  Sieger  ->  Belohnung
+# ============================================================================
+
+events:
+  spleef:
+    display: "&bSpleef"
+    description: "&7Grabe deinen Mitspielern den Boden weg."
+    icon: IRON_SHOVEL
+    type: SPLEEF
+    warp: "spleef"
+    countdown: 60
+    min-players: 2
+    max-players: 0
+    duration: 600
+    reward-money: 1500.0
+    reward-experience: 200
+    reward-commands: []
+    settings:
+      # Wer unter diese Hoehe faellt, scheidet aus.
+      floor-y: 60
+
+  turnier:
+    display: "&cPvP-Turnier"
+    description: "&7Der letzte Ueberlebende gewinnt."
+    icon: DIAMOND_SWORD
+    type: PVP
+    warp: "arena"
+    countdown: 60
+    min-players: 2
+    max-players: 0
+    duration: 900
+    reward-money: 2500.0
+    reward-experience: 300
+    reward-commands: []
+    settings: {}
+
+  dropevent:
+    display: "&6Drop-Event"
+    description: "&7Regelmaessige Item-Drops am Eventort."
+    icon: DROPPER
+    type: DROP
+    warp: "event"
+    countdown: 45
+    min-players: 1
+    max-players: 0
+    duration: 600
+    reward-money: 0.0
+    reward-experience: 0
+    reward-commands: []
+    settings:
+      interval-seconds: 20
+      items:
+        - "DIAMOND:3"
+        - "GOLD_INGOT:8"
+        - "EMERALD:4"
+        - "ENCHANTED_GOLDEN_APPLE:1"
+        - "IRON_BLOCK:2"
+
+  mobarena:
+    display: "&4Mob-Arena"
+    description: "&7Ueberlebe so viele Wellen wie moeglich."
+    icon: ZOMBIE_HEAD
+    type: MOB_ARENA
+    warp: "arena"
+    countdown: 60
+    min-players: 1
+    max-players: 0
+    duration: 900
+    reward-money: 3000.0
+    reward-experience: 500
+    reward-commands: []
+    settings:
+      mob: ZOMBIE
+      mobs-per-wave: 5
+      wave-interval-seconds: 30
+
+  parkour:
+    display: "&aParkour"
+    description: "&7Wer zuerst das Ziel erreicht, gewinnt."
+    icon: FEATHER
+    type: PARKOUR
+    warp: "parkour"
+    countdown: 45
+    min-players: 1
+    max-players: 0
+    duration: 600
+    reward-money: 1200.0
+    reward-experience: 150
+    reward-commands: []
+    settings:
+      # Warp, der als Ziel gilt
+      goal-warp: "parkour-ziel"
+
+  schatzsuche:
+    display: "&eSchatzsuche"
+    description: "&7Sammle die versteckten Schaetze ein."
+    icon: GOLD_INGOT
+    type: TREASURE
+    warp: "event"
+    countdown: 60
+    min-players: 1
+    max-players: 0
+    duration: 600
+    reward-money: 1800.0
+    reward-experience: 200
+    reward-commands: []
+    settings:
+      treasure-count: 30
+      treasures-to-win: 5
+      radius: 60
+      treasure-item: GOLD_INGOT
+
+  bauwettbewerb:
+    display: "&dBau-Wettbewerb"
+    description: "&7Baut euer schoenstes Werk - das Team kuert den Sieger."
+    icon: BRICKS
+    type: BUILD
+    warp: "bauwettbewerb"
+    countdown: 60
+    min-players: 2
+    max-players: 0
+    duration: 1800
+    reward-money: 2000.0
+    reward-experience: 250
+    reward-commands: []
+    settings: {}

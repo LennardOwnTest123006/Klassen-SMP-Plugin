@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Java 21 einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verfuegbare Spigot-Version ermitteln
+        id: spigot
+        run: |
+          # Die in der pom.xml eingetragene Version verwenden, wenn sie im
+          # Spigot-Repository existiert - sonst auf die neueste 1.21er Version
+          # zurueckfallen, damit der Build nicht an einer noch nicht
+          # veroeffentlichten Version scheitert.
+          POM_VERSION=$(mvn -B -q help:evaluate -Dexpression=spigot.version -DforceStdout 2>/dev/null | tail -1 || echo "")
+          META="https://hub.spigotmc.org/nexus/content/repositories/snapshots/org/spigotmc/spigot-api/maven-metadata.xml"
+          curl -sSL "$META" -o metadata.xml || true
+          if [ -n "$POM_VERSION" ] && grep -q "<version>${POM_VERSION}</version>" metadata.xml; then
+            echo "version=$POM_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            FALLBACK=$(grep -o '<version>1\.21[^<]*</version>' metadata.xml | tail -1 | sed 's/<[^>]*>//g')
+            echo "Version $POM_VERSION nicht verfuegbar - verwende $FALLBACK"
+            echo "version=$FALLBACK" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bauen
+        run: mvn -B clean package -Dspigot.version=${{ steps.spigot.outputs.version }}
+
+      - name: JAR pruefen
+        run: |
+          ls -lh target/*.jar
+          unzip -l target/KlassenSMP-*.jar | head -30
+          unzip -p target/KlassenSMP-*.jar plugin.yml | head -20
+
+      - name: JAR hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: KlassenSMP
+          path: target/KlassenSMP-*.jar
+          if-no-files-found: error

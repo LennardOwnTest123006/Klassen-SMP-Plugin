@@ -1,0 +1,83 @@
+# ============================================================================
+#  KlassenSMP - Kits
+#
+#  Items koennen auf zwei Arten angegeben werden:
+#   1) Kurzschreibweise: MATERIAL:ANZAHL:verzauberung=stufe,verzauberung=stufe:Name
+#      Beispiel: DIAMOND_SWORD:1:sharpness=3,unbreaking=2:Klassen_Schwert
+#   2) Vollstaendig serialisiert - entsteht automatisch durch
+#      /kit erstellen <name> [cooldown-sekunden]
+#
+#  cooldown : Wartezeit in Sekunden (0 = kein Cooldown)
+#  one-time : true = das Kit kann nur ein einziges Mal genutzt werden
+#  price    : Preis in der Server-Waehrung (0 = kostenlos)
+# ============================================================================
+
+kits:
+  starter:
+    display: "&aStarter-Kit"
+    icon: OAK_LOG
+    permission: ""
+    cooldown: 0
+    one-time: true
+    price: 0
+    description:
+      - "&7Das Startpaket fuer neue Spieler."
+      - "&7Kann nur einmal abgeholt werden."
+    items:
+      - "STONE_SWORD:1"
+      - "STONE_PICKAXE:1"
+      - "STONE_AXE:1"
+      - "STONE_SHOVEL:1"
+      - "BREAD:16"
+      - "OAK_LOG:32"
+      - "TORCH:32"
+    commands: []
+
+  taeglich:
+    display: "&eTagesbelohnung"
+    icon: CHEST
+    permission: ""
+    cooldown: 86400
+    one-time: false
+    price: 0
+    description:
+      - "&7Einmal pro Tag abholbar."
+    items:
+      - "COOKED_BEEF:16"
+      - "IRON_INGOT:8"
+      - "COAL:16"
+      - "EXPERIENCE_BOTTLE:4"
+    commands: []
+
+  werkzeug:
+    display: "&6Werkzeug-Kit"
+    icon: IRON_PICKAXE
+    permission: "klassensmp.kit.vip"
+    cooldown: 43200
+    one-time: false
+    price: 0
+    description:
+      - "&7Ordentliches Werkzeug fuer VIPs."
+    items:
+      - "IRON_PICKAXE:1:efficiency=3,unbreaking=2"
+      - "IRON_AXE:1:efficiency=2,unbreaking=2"
+      - "IRON_SHOVEL:1:efficiency=2"
+      - "GOLDEN_APPLE:2"
+    commands: []
+
+  bauen:
+    display: "&bBau-Kit"
+    icon: BRICKS
+    permission: ""
+    cooldown: 21600
+    one-time: false
+    price: 500.0
+    description:
+      - "&7Baumaterial gegen Bezahlung."
+      - "&7Preis: &a500"
+    items:
+      - "STONE:64"
+      - "OAK_PLANKS:64"
+      - "GLASS:32"
+      - "SCAFFOLDING:32"
+    commands: []
