@@ -27,18 +27,35 @@ import java.util.function.Consumer;
 public abstract class Gui implements InventoryHolder {
 
     protected final KlassenSMP plugin;
-    protected final Inventory inventory;
     private final Map<Integer, Consumer<InventoryClickEvent>> actions = new HashMap<>();
+    private final String title;
+    private final int size;
+
+    private Inventory inventory;
 
     protected Gui(KlassenSMP plugin, String title, int rows) {
         this.plugin = plugin;
-        int size = NumberUtil.clamp(rows, 1, 6) * 9;
-        this.inventory = Bukkit.createInventory(this, size, Text.color(title));
+        this.title = title;
+        this.size = NumberUtil.clamp(rows, 1, 6) * 9;
+    }
+
+    /**
+     * Das Inventar dieser Oberflaeche.
+     *
+     * <p>Es wird bewusst erst beim ersten Zugriff erzeugt: im Konstruktor
+     * waere {@code this} noch nicht vollstaendig initialisiert, waehrend
+     * Bukkit die Instanz bereits als {@link InventoryHolder} speichert.</p>
+     */
+    protected final Inventory inventory() {
+        if (inventory == null) {
+            inventory = Bukkit.createInventory(this, size, Text.color(title));
+        }
+        return inventory;
     }
 
     @Override
     public final Inventory getInventory() {
-        return inventory;
+        return inventory();
     }
 
     /** Wird beim Oeffnen und bei jeder Aktualisierung aufgerufen. */
@@ -46,25 +63,25 @@ public abstract class Gui implements InventoryHolder {
 
     public void open(Player player) {
         actions.clear();
-        inventory.clear();
+        inventory().clear();
         build(player);
-        player.openInventory(inventory);
+        player.openInventory(inventory());
     }
 
     /** Baut die Oberflaeche neu, ohne sie zu schliessen. */
     public void refresh(Player player) {
         actions.clear();
-        inventory.clear();
+        inventory().clear();
         build(player);
         player.updateInventory();
     }
 
     /** Setzt ein Item mit zugehoeriger Aktion. */
     protected void set(int slot, ItemStack item, Consumer<InventoryClickEvent> action) {
-        if (slot < 0 || slot >= inventory.getSize()) {
+        if (slot < 0 || slot >= inventory().getSize()) {
             return;
         }
-        inventory.setItem(slot, item);
+        inventory().setItem(slot, item);
         if (action != null) {
             actions.put(slot, action);
         }
@@ -80,9 +97,9 @@ public abstract class Gui implements InventoryHolder {
                 plugin.getConfigManager().string("gui.filler-material", "GRAY_STAINED_GLASS_PANE"),
                 Material.GRAY_STAINED_GLASS_PANE);
         ItemStack filler = new ItemBuilder(material).name("&r").build();
-        for (int slot = 0; slot < inventory.getSize(); slot++) {
-            if (inventory.getItem(slot) == null) {
-                inventory.setItem(slot, filler);
+        for (int slot = 0; slot < inventory().getSize(); slot++) {
+            if (inventory().getItem(slot) == null) {
+                inventory().setItem(slot, filler);
             }
         }
     }

@@ -34,10 +34,10 @@ public final class GraveGui extends Gui {
     protected void build(Player player) {
         int slot = 0;
         for (ItemStack item : de.klassensmp.util.ItemSerializer.compact(grave.getContents())) {
-            if (slot >= inventory.getSize()) {
+            if (slot >= inventory().getSize()) {
                 break;
             }
-            inventory.setItem(slot++, item);
+            inventory().setItem(slot++, item);
         }
     }
 
@@ -54,7 +54,7 @@ public final class GraveGui extends Gui {
     @Override
     public void handleClose(InventoryCloseEvent event) {
         Player player = event.getPlayer() instanceof Player p ? p : null;
-        plugin.getGraveManager().handleClose(player, grave, inventory.getContents());
+        plugin.getGraveManager().handleClose(player, grave, inventory().getContents());
     }
 
     public Grave getGrave() {

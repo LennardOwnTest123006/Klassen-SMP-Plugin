@@ -60,7 +60,7 @@ public final class CrateGui extends Gui {
                 }
                 for (int slot : ANIMATION_SLOTS) {
                     CrateReward random = rewards.get((int) (Math.random() * rewards.size()));
-                    inventory.setItem(slot, plugin.getCrateManager().previewItem(random));
+                    inventory().setItem(slot, plugin.getCrateManager().previewItem(random));
                 }
                 if (plugin.getConfigManager().bool("sounds.enabled", true)) {
                     Compat.playSound(player,
@@ -82,10 +82,10 @@ public final class CrateGui extends Gui {
         finished = true;
 
         for (int slot : ANIMATION_SLOTS) {
-            inventory.setItem(slot, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("&r").build());
+            inventory().setItem(slot, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("&r").build());
         }
         ItemStack preview = plugin.getCrateManager().previewItem(result);
-        inventory.setItem(RESULT_SLOT, preview);
+        inventory().setItem(RESULT_SLOT, preview);
         if (player.isOnline()) {
             player.updateInventory();
         }

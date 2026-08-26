@@ -234,7 +234,7 @@ public final class Database {
                 """,
                 """
                 CREATE TABLE IF NOT EXISTS ks_punishments (
-                    """ + autoId + """
+                """ + autoId + """
                     ,
                     target_uuid VARCHAR(36) NOT NULL,
                     target_name VARCHAR(16) NOT NULL,
@@ -276,7 +276,7 @@ public final class Database {
                 """,
                 """
                 CREATE TABLE IF NOT EXISTS ks_claims (
-                    """ + autoId + """
+                """ + autoId + """
                     ,
                     owner VARCHAR(36) NOT NULL,
                     world VARCHAR(64) NOT NULL,
@@ -303,7 +303,7 @@ public final class Database {
                 """,
                 """
                 CREATE TABLE IF NOT EXISTS ks_graves (
-                    """ + autoId + """
+                """ + autoId + """
                     ,
                     owner VARCHAR(36) NOT NULL,
                     owner_name VARCHAR(16) NOT NULL DEFAULT '',
