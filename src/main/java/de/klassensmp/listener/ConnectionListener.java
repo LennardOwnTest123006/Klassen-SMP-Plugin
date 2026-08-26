@@ -43,12 +43,7 @@ public final class ConnectionListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        plugin.getPlayerDataManager().handleJoin(player);
-        plugin.getHomeManager().loadFor(player.getUniqueId());
-        plugin.getKitManager().loadUses(player.getUniqueId());
-        plugin.getQuestManager().loadFor(player.getUniqueId());
-        plugin.getAchievementManager().loadFor(player.getUniqueId());
-        plugin.getChatManager().loadIgnores(player.getUniqueId());
+        plugin.loadPlayer(player);
 
         plugin.getBoardManager().handleJoin(player);
         plugin.getTabManager().handleJoin(player);

@@ -213,9 +213,27 @@ public final class KlassenSMP extends JavaPlugin {
         backupManager.startScheduler();
 
         // Spieler, die bereits online sind (z.B. bei /reload), sauber uebernehmen.
-        for (var player : Bukkit.getOnlinePlayers()) {
-            playerDataManager.handleJoin(player);
+        for (org.bukkit.entity.Player player : Bukkit.getOnlinePlayers()) {
+            loadPlayer(player);
+            boardManager.handleJoin(player);
+            tabManager.handleJoin(player);
         }
+    }
+
+    /**
+     * Laedt alle Daten eines Spielers.
+     *
+     * <p>Wird sowohl beim Beitritt als auch beim Aktivieren des Plugins fuer
+     * bereits verbundene Spieler verwendet - so gibt es nur einen Ort, an dem
+     * die Ladeschritte gepflegt werden muessen.</p>
+     */
+    public void loadPlayer(org.bukkit.entity.Player player) {
+        playerDataManager.handleJoin(player);
+        homeManager.loadFor(player.getUniqueId());
+        kitManager.loadUses(player.getUniqueId());
+        questManager.loadFor(player.getUniqueId());
+        achievementManager.loadFor(player.getUniqueId());
+        chatManager.loadIgnores(player.getUniqueId());
     }
 
     @Override

@@ -60,7 +60,9 @@ public final class PlayerDataManager {
                 plugin.getLogger().info(list.size() + " Spielerprofile geladen.");
             }
             loaded = true;
-            // Spieler, die waehrend des Ladens verbunden haben, nachziehen.
+            // Spieler, die waehrend des Ladens verbunden haben, nachziehen:
+            // ihr Profil wurde soeben durch den Datenbankstand ersetzt, daher
+            // muss die laufende Sitzung neu gestartet werden.
             for (Player player : Bukkit.getOnlinePlayers()) {
                 handleJoin(player);
             }
