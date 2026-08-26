@@ -54,9 +54,25 @@ Maven-Repositories gebaut werden kann.
 
 ---
 
+## Fertige Datei herunterladen
+
+Die gebaute Plugin-Datei liegt direkt im Repository und muss **nicht** selbst
+gebaut werden:
+
+**[`dist/Klassen-SMP-Plugin.jar`](../../raw/claude/klassensmp-minecraft-plugin-dlnylk/dist/Klassen-SMP-Plugin.jar)**
+
+Auf GitHub im Ordner `dist/` auf die Datei klicken und dann auf
+**Download** (Pfeil-Symbol) gehen. Die Datei wird bei jeder Aenderung am
+Quellcode automatisch neu gebaut und dort aktualisiert.
+
+Alternativ liegt sie nach jedem Build auch unter
+*Actions -> Build -> Artifacts -> KlassenSMP*.
+
+---
+
 ## Installation
 
-1. `KlassenSMP-1.0.0.jar` nach `plugins/` kopieren.
+1. `Klassen-SMP-Plugin.jar` nach `plugins/` kopieren.
 2. Server starten. Beim ersten Start entstehen:
 
    ```
@@ -397,6 +413,9 @@ mvn clean package
 ```
 
 Ergebnis: `target/KlassenSMP-1.0.0.jar`
+
+Das ist nur noetig, wenn du am Quellcode etwas aenderst. Fuer den normalen
+Betrieb reicht die fertige Datei aus `dist/`.
 
 Die einzige Compile-Abhaengigkeit ist `org.spigotmc:spigot-api` (Scope
 `provided`) aus dem Spigot-Repository. Eine andere Spigot-Version laesst sich

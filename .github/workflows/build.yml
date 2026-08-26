@@ -3,12 +3,21 @@ name: Build
 on:
   push:
     branches: ["**"]
+    paths-ignore:
+      - "dist/**"
   pull_request:
   workflow_dispatch:
+
+# Wird gebraucht, damit die fertige JAR zurueck ins Repository geschrieben
+# werden kann.
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Der eigene Commit mit der JAR soll keinen weiteren Build ausloesen.
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - uses: actions/checkout@v4
 
@@ -43,8 +52,14 @@ jobs:
       - name: JAR pruefen
         run: |
           ls -lh target/*.jar
-          unzip -l target/KlassenSMP-*.jar | head -30
-          unzip -p target/KlassenSMP-*.jar plugin.yml | head -20
+          # Muss die Plugin-Beschreibung und die Hauptklasse enthalten,
+          # sonst laedt der Server das Plugin nicht.
+          unzip -p target/KlassenSMP-*.jar plugin.yml | head -5
+          unzip -l target/KlassenSMP-*.jar | grep -q "de/klassensmp/KlassenSMP.class"
+          for f in config.yml messages.yml kits.yml crates.yml quests.yml achievements.yml events.yml; do
+            unzip -l target/KlassenSMP-*.jar | grep -q "$f" || { echo "FEHLT: $f"; exit 1; }
+          done
+          echo "JAR ist vollstaendig."
 
       - name: JAR hochladen
         uses: actions/upload-artifact@v4
@@ -52,3 +67,20 @@ jobs:
           name: KlassenSMP
           path: target/KlassenSMP-*.jar
           if-no-files-found: error
+
+      - name: Fertige JAR ins Repository legen
+        if: github.event_name == 'push'
+        run: |
+          # Die fertige Datei liegt danach unter dist/ und kann direkt auf
+          # GitHub heruntergeladen werden - ohne Maven, ohne Anmeldung.
+          mkdir -p dist
+          cp target/KlassenSMP-*.jar dist/Klassen-SMP-Plugin.jar
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/Klassen-SMP-Plugin.jar
+          if git diff --cached --quiet; then
+            echo "JAR unveraendert - kein Commit noetig."
+          else
+            git commit -m "Fertige Plugin-JAR aktualisiert [skip ci]"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi

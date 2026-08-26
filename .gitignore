@@ -1,9 +1,13 @@
 target/
 *.class
-*.jar
 .idea/
 *.iml
 .vscode/
 .settings/
 .classpath
 .project
+
+# Die fertige Plugin-JAR liegt bewusst unter dist/ und wird mitversioniert,
+# damit sie ohne Maven heruntergeladen werden kann.
+*.jar
+!dist/*.jar
