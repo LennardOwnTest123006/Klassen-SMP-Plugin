@@ -19,7 +19,7 @@ public final class Grave {
     private final Location location;
     private final long created;
     private final long expires;
-    private final int experience;
+    private int experience;
     private ItemStack[] contents;
     private boolean claimed;
 
@@ -62,6 +62,17 @@ public final class Grave {
 
     public int getExperience() {
         return experience;
+    }
+
+    /**
+     * Entnimmt die gespeicherte Erfahrung und setzt sie auf 0.
+     * Dadurch kann sie beim erneuten Oeffnen nicht ein zweites Mal
+     * ausgezahlt werden.
+     */
+    public int takeExperience() {
+        int value = experience;
+        this.experience = 0;
+        return value;
     }
 
     public ItemStack[] getContents() {

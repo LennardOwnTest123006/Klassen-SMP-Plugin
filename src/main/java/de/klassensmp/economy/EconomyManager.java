@@ -152,8 +152,9 @@ public final class EconomyManager {
                 return false;
             }
             data.setBank(data.getBank() - value);
+            // Bewusst setMoney statt addMoney: eine Abhebung ist keine
+            // Einnahme und darf die Statistik "verdient" nicht veraendern.
             data.setMoney(Math.min(getMaxBalance(), data.getMoney() + value));
-            data.setEarned(Math.max(0.0D, data.getEarned() - value));
             return true;
         }
     }

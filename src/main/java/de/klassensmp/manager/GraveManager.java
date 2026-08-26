@@ -354,8 +354,9 @@ public final class GraveManager {
         openGraves.remove(grave.getId());
         grave.setContents(contents);
 
-        if (grave.getExperience() > 0 && player != null) {
-            player.giveExp(grave.getExperience());
+        int experience = grave.takeExperience();
+        if (experience > 0 && player != null) {
+            player.giveExp(experience);
         }
 
         boolean empty = ItemSerializer.compact(contents).isEmpty();
